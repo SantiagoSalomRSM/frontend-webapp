@@ -276,14 +276,19 @@ async def handle_tally_webhook(payload: TallyWebhookPayload, background_tasks: B
     try:
         # Verificar si ya existe estado en la tabla
         cur.execute("SELECT status FROM form_ai_db WHERE submission_id = %s", (submission_id,))
-        status = cur.fetchone()[0]
-        if status:
-            if status == STATUS_PROCESSING:
-                logging.warning(f"[{submission_id}] Webhook ignorado: ya está en estado '{STATUS_PROCESSING}'.")
-                return {"message": f"Webhook ignored: already in processing state '{STATUS_PROCESSING}'."}, 200
-            else:
-                logging.warning(f"[{submission_id}] Webhook ignorado: ya tiene estado final {status}.")
-                return {"message": f"Webhook ignored: already has final state '{status}'."}, 200
+        row = cur.fetchone()
+        if row is None:
+            logging.info(f"[{submission_id}] No se encontró estado previo. Creando nuevo registro.")
+        else:
+            logging.info(f"[{submission_id}] Estado previo encontrado: {row[0]}.")
+            status = cur.fetchone()[0]
+            if status:
+                if status == STATUS_PROCESSING:
+                    logging.warning(f"[{submission_id}] Webhook ignorado: ya está en estado '{STATUS_PROCESSING}'.")
+                    return {"message": f"Webhook ignored: already in processing state '{STATUS_PROCESSING}'."}, 200
+                else:
+                    logging.warning(f"[{submission_id}] Webhook ignorado: ya tiene estado final {status}.")
+                    return {"message": f"Webhook ignored: already has final state '{status}'."}, 200
         
         # Extraer información relevante del formulario
         form_type = detect_form_type(payload)
