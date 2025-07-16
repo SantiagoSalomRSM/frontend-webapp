@@ -10,6 +10,9 @@ from openai import OpenAIError, APIError
 import psycopg2
 import openai as AzureOpenAI
 
+# --- App FastAPI ---
+app = FastAPI(title="Tally Webhook Processor")
+
 # --- Configuración Inicial ---
 load_dotenv()
 
@@ -62,9 +65,6 @@ STATUS_NOT_FOUND = "not_found" # Estado implícito si no existe la key
 GEMINI_ERROR_MARKER = "ERROR_PROCESSING_GEMINI" # Marcador en el resultado
 DEEPSEEK_ERROR_MARKER = "ERROR_PROCESSING_DEEPSEEK" # Marcador en el resultado
 OPENAI_ERROR_MARKER = "ERROR_PROCESSING_OPENAI" # Marcador en el resultado
-
-# --- App FastAPI ---
-app = FastAPI(title="Tally Webhook Processor")
 
 # --- Modelos Pydantic ---
 class TallyOption(BaseModel):
