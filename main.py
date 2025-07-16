@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from openai import OpenAIError, APIError
 import psycopg2
-import openai as AzureOpenAI
+from openai import AzureOpenAI
 
 # --- App FastAPI ---
 app = FastAPI(title="Tally Webhook Processor")
