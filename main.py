@@ -6,7 +6,6 @@ from typing import List, Optional, Dict, Any
 import google.generativeai as genai
 from dotenv import load_dotenv
 from openai import OpenAI
-from openai import OpenAIError, APIError
 import psycopg2
 from openai import AzureOpenAI
 
