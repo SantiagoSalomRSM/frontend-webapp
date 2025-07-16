@@ -329,7 +329,6 @@ async def handle_tally_webhook(payload: TallyWebhookPayload, background_tasks: B
             conn.close()
         logging.info(f"[{submission_id}] Conexión a BD cerrada.")
 
-
 @app.get("/")
 async def root():
     """Endpoint raíz simple para verificar que la app funciona."""
