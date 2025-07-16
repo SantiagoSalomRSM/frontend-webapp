@@ -46,13 +46,17 @@ elif MODEL == "deepseek":
             logging.error(f"Error configurando el cliente de DeepSeek: {e}")
 elif MODEL == "openai":
     logging.info("Usando modelo OpenAI para la generación de contenido.")
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    if not OPENAI_API_KEY:
-        logging.error("Error: La variable de entorno OPENAI_API_KEY no está configurada.")
+    AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
+    AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
+    if not AZURE_OPENAI_API_KEY or not AZURE_OPENAI_ENDPOINT:
+        logging.error("Error: Las variables de entorno AZURE_OPENAI_API_KEY o AZURE_OPENAI_ENDPOINT no están configuradas.")
     else:
         try:
-            client = OpenAI(api_key=OPENAI_API_KEY)
-            logging.info("Cliente de OpenAI configurado correctamente.")
+            client = AzureOpenAI(
+                azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT"), 
+                api_key=os.getenv("AZURE_OPENAI_API_KEY"),  
+                api_version="2025-02-01-preview"
+            )
         except Exception as e:
             logging.error(f"Error configurando el cliente de OpenAI: {e}")
 
@@ -95,14 +99,6 @@ class UpdateResultPayload(BaseModel):
     reason: Optional[str] = None
 
 # Inicializar el cliente de OpenAI
-try:
-    client = AzureOpenAI(
-        azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT"), 
-        api_key=os.getenv("AZURE_OPENAI_API_KEY"),  
-        api_version="2025-02-01-preview"
-    )
-except Exception as e:
-    logging.error(f"Error configurando el cliente de OpenAI: {e}")
 
 def summarize_payload(payload: TallyWebhookPayload) -> str:
     """Genera un resumen entendible del Tally payload."""
