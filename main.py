@@ -45,7 +45,7 @@ elif MODEL == "deepseek":
         except Exception as e:
             logging.error(f"Error configurando el cliente de DeepSeek: {e}")
 elif MODEL == "openai":
-    logging.info("Usando modelo OpenAI para la generación de contenido.")
+    logging.info("Usando modelo Azure OpenAI para la generación de contenido.")
     AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
     AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
     if not AZURE_OPENAI_API_KEY or not AZURE_OPENAI_ENDPOINT:
