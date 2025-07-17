@@ -10,7 +10,7 @@ import psycopg2
 from openai import AzureOpenAI
 
 # --- App FastAPI ---
-app = FastAPI(title="Tally Webhook Processor")
+app = FastAPI(title="results_fetcher",)
 
 # --- Configuración Inicial ---
 load_dotenv()
