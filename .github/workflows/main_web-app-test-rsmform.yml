@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'web-app-test-rsmform'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F8713A6977CE4D5F83EFEFE4885C79BF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_798A655B75F34A31ADF0BF1333746A10 }}
